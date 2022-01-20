@@ -14,6 +14,7 @@ public class MarkdownParse {
             System.out.println(currentIndex);
             int nextOpenBracket = markdown.indexOf("[", currentIndex);
             int nextCloseBracket = markdown.indexOf("]", nextOpenBracket);
+            //prevents infinite loop if there are lines between urls
             if(nextOpenBracket < 0 || nextCloseBracket < 0){
                 break;
             }
@@ -23,10 +24,17 @@ public class MarkdownParse {
             }
             int openParen = markdown.indexOf("(", nextCloseBracket);
             int closeParen = markdown.indexOf(")", openParen);
+            //prevents infinite loop if there are lines between urls
             if(openParen < 0 || closeParen < 0){
                 break;
             }
-            toReturn.add(markdown.substring(openParen + 1, closeParen));
+            //if there are quotes around the url we just want to print url
+            //start one later and end one earlier
+            if(markdown.substring(openParen+1, openParen + 2).equals("\"")){
+                toReturn.add(markdown.substring(openParen + 2, closeParen - 1));
+            } else {
+                toReturn.add(markdown.substring(openParen + 1, closeParen));
+            }
             currentIndex = closeParen + 1;
             
         }
