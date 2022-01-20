@@ -17,6 +17,10 @@ public class MarkdownParse {
             if(nextOpenBracket < 0 || nextCloseBracket < 0){
                 break;
             }
+            //image files have ![], we don't want to add that to our ArrayList
+            if(markdown.substring(nextOpenBracket-1, nextOpenBracket).equals("!")){
+                break;
+            }
             int openParen = markdown.indexOf("(", nextCloseBracket);
             int closeParen = markdown.indexOf(")", openParen);
             if(openParen < 0 || closeParen < 0){
