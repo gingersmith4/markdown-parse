@@ -19,9 +19,12 @@ public class MarkdownParse {
                 break;
             }
             //image files have ![], we don't want to add that to our ArrayList
-            if(markdown.substring(nextOpenBracket-1, nextOpenBracket).equals("!")){
-                break;
+            if(nextOpenBracket != 0){ //if it starts at 0 we can't check -1
+                if(markdown.substring(nextOpenBracket-1, nextOpenBracket).equals("!")){
+                    break;
+                }
             }
+            
             int openParen = markdown.indexOf("(", nextCloseBracket);
             int closeParen = markdown.indexOf(")", openParen);
             //prevents infinite loop if there are lines between urls
