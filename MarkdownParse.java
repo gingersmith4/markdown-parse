@@ -3,42 +3,38 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
-
 public class MarkdownParse {
     public static ArrayList<String> getLinks(String markdown) {
         ArrayList<String> toReturn = new ArrayList<>();
         // find the next [, then find the ], then find the (, then take up to
         // the next )
         int currentIndex = 0;
+        int pastCloseParen = 0;
         while(currentIndex < markdown.length()) {
-            System.out.println(currentIndex);
             int nextOpenBracket = markdown.indexOf("[", currentIndex);
-            int nextCloseBracket = markdown.indexOf("]", nextOpenBracket);
-            //prevents infinite loop if there are lines between urls
-            if(nextOpenBracket < 0 || nextCloseBracket < 0){
-                break;
-            }
-            //image files have ![], we don't want to add that to our ArrayList
-            if(nextOpenBracket != 0){ //if it starts at 0 we can't check -1
-                if(markdown.substring(nextOpenBracket-1, nextOpenBracket).equals("!")){
-                    break;
-                }
-            }
             
-            int openParen = markdown.indexOf("(", nextCloseBracket);
-            int closeParen = markdown.indexOf(")", openParen);
-            //prevents infinite loop if there are lines between urls
-            if(openParen < 0 || closeParen < 0){
-                break;
-            }
-            //if there are quotes around the url we just want to print url
-            //start one later and end one earlier
-            if(markdown.substring(openParen+1, openParen + 2).equals("\"")){
-                toReturn.add(markdown.substring(openParen + 2, closeParen - 1));
+            // System.out.println("Value of current index before loop: " + currentIndex);
+            int nextCloseBracket = markdown.indexOf("]", nextOpenBracket);
+             int openParen = markdown.indexOf("(", nextCloseBracket);
+             int closeParen = markdown.indexOf(")", openParen);
+
+             if(pastCloseParen == closeParen || nextOpenBracket == -1 || nextCloseBracket == -1 || openParen == -1 || closeParen == -1) {
+                 break;
+             }
+             pastCloseParen = closeParen;
+            
+            // System.out.println("Index of next open bracket: " + nextOpenBracket);
+            // System.out.println("Index of next open bracket - 1: " + (nextOpenBracket - 1));
+            if(nextOpenBracket != 0) {
+                if(!markdown.substring(nextOpenBracket-1, nextOpenBracket).equals("!")){
+                    toReturn.add(markdown.substring(openParen + 1, closeParen));
+                }
+                currentIndex = closeParen + 1;
             } else {
                 toReturn.add(markdown.substring(openParen + 1, closeParen));
+                currentIndex = closeParen + 1;
             }
-            currentIndex = closeParen + 1;
+            // System.out.println("Value of current index after loop: " + currentIndex);
         }
         return toReturn;
     }
