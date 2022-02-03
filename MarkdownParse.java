@@ -12,19 +12,16 @@ public class MarkdownParse {
         int pastCloseParen = 0;
         while(currentIndex < markdown.length()) {
             int nextOpenBracket = markdown.indexOf("[", currentIndex);
-            
-            // System.out.println("Value of current index before loop: " + currentIndex);
             int nextCloseBracket = markdown.indexOf("]", nextOpenBracket);
-             int openParen = markdown.indexOf("(", nextCloseBracket);
-             int closeParen = markdown.indexOf(")", openParen);
+            int openParen = markdown.indexOf("(", nextCloseBracket);
+            int closeParen = markdown.indexOf(")", openParen);
 
-             if(pastCloseParen == closeParen || nextOpenBracket == -1 || nextCloseBracket == -1 || openParen == -1 || closeParen == -1) {
-                 break;
-             }
-             pastCloseParen = closeParen;
+            if(pastCloseParen == closeParen || nextOpenBracket == -1 || nextCloseBracket == -1 || openParen == -1 || closeParen == -1) {
+                break;
+            }
+            pastCloseParen = closeParen;
             
-            // System.out.println("Index of next open bracket: " + nextOpenBracket);
-            // System.out.println("Index of next open bracket - 1: " + (nextOpenBracket - 1));
+            //don't add image name to list, images start with !
             if(nextOpenBracket != 0) {
                 if(!markdown.substring(nextOpenBracket-1, nextOpenBracket).equals("!")){
                     toReturn.add(markdown.substring(openParen + 1, closeParen));
@@ -34,7 +31,6 @@ public class MarkdownParse {
                 toReturn.add(markdown.substring(openParen + 1, closeParen));
                 currentIndex = closeParen + 1;
             }
-            // System.out.println("Value of current index after loop: " + currentIndex);
         }
         return toReturn;
     }
