@@ -25,12 +25,17 @@ public class MarkdownParse {
             if(nextOpenBracket != 0) {
                 if(!markdown.substring(nextOpenBracket-1, nextOpenBracket).equals("!")){
                     toReturn.add(markdown.substring(openParen + 1, closeParen));
-                }
-                currentIndex = closeParen + 1;
+                } 
             } else {
-                toReturn.add(markdown.substring(openParen + 1, closeParen));
-                currentIndex = closeParen + 1;
+                //if there are quotes around the url we just want to print url
+                //start one later and end one earlier
+                if(markdown.substring(openParen+1, openParen + 2).equals("\"")){
+                    toReturn.add(markdown.substring(openParen + 2, closeParen - 1));
+                } else {
+                    toReturn.add(markdown.substring(openParen + 1, closeParen));
+                }
             }
+            currentIndex = closeParen + 1;
         }
         return toReturn;
     }
