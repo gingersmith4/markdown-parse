@@ -10,7 +10,6 @@ public class MarkdownParse {
         // the next )
         int currentIndex = 0;
         int pastCloseParen = 0;
-        int newVar = 20;
         while(currentIndex < markdown.length()) {
             int nextOpenBracket = markdown.indexOf("[", currentIndex);
             int nextCloseBracket = markdown.indexOf("]", nextOpenBracket);
