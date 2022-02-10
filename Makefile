@@ -1,3 +1,6 @@
+hello:
+	echo "hello world"
+
 MarkdownParse.class: MarkdownParse.java
 	javac MarkdownParse.java
 
