@@ -1,6 +1,7 @@
 import static org.junit.Assert.*;
 import org.junit.*;
 import java.util.ArrayList;
+import java.util.List;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.io.IOException;
@@ -63,5 +64,23 @@ public class MarkdownParseTest {
 	    String contents = Files.readString(fileName);
         ArrayList<String> links = MarkdownParse.getLinks(contents);
         assertEquals(linkTester, links);
+    }
+
+    /**@Test
+    public void testGetLinksQuiz() throws IOException{
+        ArrayList<String> linkTester = new ArrayList<>();
+        linkTester.add("a-link.html");
+
+        Path fileName = Path.of("test-file-quiz.md");
+	    String contents = Files.readString(fileName);
+        ArrayList<String> links = MarkdownParse.getLinks(contents);
+        assertEquals(linkTester, links);
+    }*/
+
+    @Test
+    public void testSpaceAfterParen() {
+        String contents = "[title]( space-in-url.com)";
+        List<String> expect = List.of("space-in-url.com");
+        assertEquals(expect, MarkdownParse.getLinks(contents));
     }
 }
