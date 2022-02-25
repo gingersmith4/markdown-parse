@@ -78,7 +78,37 @@ public class MarkdownParseTest {
     @Test
     public void snippet1() throws IOException{
         ArrayList<String> linkTester = new ArrayList<>();
-        //based on VSCode preview expect no correct links
+        //based on VSCode preview expect these links
+        linkTester.add("url.com");
+        linkTester.add("`google.com");
+        linkTester.add("google.com");
+        linkTester.add("ucsd.edu");
+
+        Path fileName = Path.of("snippet1.md");
+	    String contents = Files.readString(fileName);
+        ArrayList<String> links = MarkdownParse.getLinks(contents);
+        assertEquals(linkTester, links);
+    }
+
+    @Test
+    public void snippet2() throws IOException{
+        ArrayList<String> linkTester = new ArrayList<>();
+        //based on VSCode preview expect these links
+        linkTester.add("url.com");
+        linkTester.add("`google.com");
+        linkTester.add("google.com");
+        linkTester.add("ucsd.edu");
+
+        Path fileName = Path.of("snippet1.md");
+	    String contents = Files.readString(fileName);
+        ArrayList<String> links = MarkdownParse.getLinks(contents);
+        assertEquals(linkTester, links);
+    }
+
+    @Test
+    public void snippet3() throws IOException{
+        ArrayList<String> linkTester = new ArrayList<>();
+        //based on VSCode preview expect these links
         linkTester.add("url.com");
         linkTester.add("`google.com");
         linkTester.add("google.com");
