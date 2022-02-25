@@ -81,8 +81,6 @@ public class MarkdownParseTest {
         //based on VSCode preview expect these links
         linkTester.add("url.com");
         linkTester.add("`google.com");
-        linkTester.add("google.com");
-        linkTester.add("ucsd.edu");
 
         Path fileName = Path.of("snippet1.md");
 	    String contents = Files.readString(fileName);
@@ -94,12 +92,12 @@ public class MarkdownParseTest {
     public void snippet2() throws IOException{
         ArrayList<String> linkTester = new ArrayList<>();
         //based on VSCode preview expect these links
-        linkTester.add("url.com");
-        linkTester.add("`google.com");
-        linkTester.add("google.com");
-        linkTester.add("ucsd.edu");
+        linkTester.add("a.com");
+        linkTester.add("b.com");
+        linkTester.add("a.com(())");
+        linkTester.add("example.com");
 
-        Path fileName = Path.of("snippet1.md");
+        Path fileName = Path.of("snippet2.md");
 	    String contents = Files.readString(fileName);
         ArrayList<String> links = MarkdownParse.getLinks(contents);
         assertEquals(linkTester, links);
@@ -109,12 +107,12 @@ public class MarkdownParseTest {
     public void snippet3() throws IOException{
         ArrayList<String> linkTester = new ArrayList<>();
         //based on VSCode preview expect these links
-        linkTester.add("url.com");
-        linkTester.add("`google.com");
-        linkTester.add("google.com");
-        linkTester.add("ucsd.edu");
+        linkTester.add("https://www.twitter.com");
+        linkTester.add("https://ucsd-cse15l-w22.github.io/");
+        linkTester.add("github.com");
+        linkTester.add("https://cse.ucsd.edu/");
 
-        Path fileName = Path.of("snippet1.md");
+        Path fileName = Path.of("snippet3.md");
 	    String contents = Files.readString(fileName);
         ArrayList<String> links = MarkdownParse.getLinks(contents);
         assertEquals(linkTester, links);
