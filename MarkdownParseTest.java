@@ -75,7 +75,7 @@ public class MarkdownParseTest {
         assertEquals(expect, MarkdownParse.getLinks(contents));
     }*/
 
-    @Test
+    /**@Test
     public void snippet1() throws IOException{
         ArrayList<String> linkTester = new ArrayList<>();
         //based on VSCode preview expect these links
@@ -116,5 +116,5 @@ public class MarkdownParseTest {
 	    String contents = Files.readString(fileName);
         ArrayList<String> links = MarkdownParse.getLinks(contents);
         assertEquals(linkTester, links);
-    }
+    }*/
 }
